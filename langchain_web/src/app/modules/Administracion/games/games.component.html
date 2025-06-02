@@ -1,0 +1,77 @@
+<div class="container mt-4">
+  <h2>Juegos disponibles</h2>
+  <button class="btn btn-primary mb-2" routerLink="/createGame">Crear juego</button>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Rulesheet</th>
+        <th>Jugadores</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let juego of juegos; let i = index">
+        <td title="{{ juego.name }}">{{ juego.name }}</td>
+        <td title="{{ juego.description }}" 
+          style="max-width: 100px;
+          width: 60%;
+          overflow: hidden;
+          white-space: nowrap;
+          ">
+            <label style=
+            "display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;">
+              {{ juego.description }}
+            </label>
+        </td>
+
+        <td title="{{juego.rulesheet}}"
+          style="
+          max-width: 100px;
+          width: 30%;
+          overflow: hidden;
+          white-space: nowrap;
+          ">
+          <label style=
+          "display: inline-block;
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;">
+            {{juego.rulesheet}}
+          </label>
+        </td>
+        <td>{{ juego.players }}</td>
+        <td>
+
+          <div class="d-flex justify-content-around" *ngIf="juego.editable">
+
+            <!-- EDIT ICON -->
+            <span title="Editar">
+              <em style="cursor: pointer; transform: scale(1.3); margin-right: 7px; color: #066bc9;" 
+                class="fa fa-pencil"
+                routerLink="/editGame/{{juego.id}}"></em>
+            </span>
+
+            <!-- DELETE ICON -->
+            <span title="Eliminar">
+              <em style="cursor: pointer; transform: scale(1.3); margin-right: 7px;" 
+                class="fa fa-trash text-danger"
+                (click)="deleteGame(juego.id)"></em>
+            </span>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>

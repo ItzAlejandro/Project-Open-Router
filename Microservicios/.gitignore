@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+
+# Archivos de entorno
+*.env
+*.env.*
+
+# Archivos de logs y bases de datos locales
+*.log
+*.sqlite3
+*.db
+
+# Archivos de configuración y secretos
+config.json
+secrets.json
+
+# Carpetas de compilación
+build/
+dist/
+*.egg-info/
+
+# VSCode
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+*.pid
+*.tar
+docker-compose.override.yml
+
+# __tests__ / coverage
+.coverage
+htmlcov/
+.cache/
+pytest_cache/
+
+# node_modules
+node_modules/
+
+# Mac / Windows
+.DS_Store
+Thumbs.db
+
+# Certbot
+certbot/conf/
+certbot/www/

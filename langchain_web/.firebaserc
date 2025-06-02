@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "language-model-games",
+    "languague-model-games": "language-model-games",
+    "defaault": "language-model-games"
+  },
+  "targets": {},
+  "etags": {}
+}

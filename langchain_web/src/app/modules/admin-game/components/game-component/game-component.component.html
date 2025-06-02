@@ -1,0 +1,328 @@
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Juegos entre modelos</h5>
+        </div>
+
+          <div class="card-body">
+            <form [formGroup]="juegoForm" (ngSubmit)="onSubmit()">
+
+              <div class="row" style="margin-bottom: 0.5em">
+                <div class="col-sm-12">
+                  <label class="form-label fw-bold">Seleccionar Juego</label>
+
+                  <!-- TOOLTIP -->
+                  <i style="
+                    color: #6d86ab;
+                    font-size: 1.4rem;
+                    margin-right: 1em;"
+                    class="fa fa-exclamation-circle float-end"
+                    tooltipPosition="right"
+                    [pTooltip]="tooltipSelectGameContent" >
+                  </i>
+                  <ng-template #tooltipSelectGameContent>
+                    <div class="flex align-items-center">
+                        <span> {{selectGameTooltip}} </span>
+                    </div>
+                  </ng-template>
+
+                  <p-dropdown class="form-select"
+                    [options]="gameList"
+                    [(ngModel)]="selectedGame"
+                    [filter]="true"
+                    filterBy="name"
+                    [showClear]="false"
+                    optionLabel="name"  name="Juego"
+                    placeholder="Seleccione" emptyMessage="No existen modelos." appendTo="body" size="large"
+                    formControlName="juego"
+                    (onChange)="onSelectedGame()">
+                  </p-dropdown>
+                </div>
+              </div>
+
+              <div class="row" style="margin-bottom: 0.5em">
+                <div class="col-sm-12">
+                  <label for="templateFile" class="form-label fw-bold">Prompt</label>
+
+                  <!-- TOOLTIP -->
+                  <i style="
+                    color: #6d86ab;
+                    font-size: 1.4rem;
+                    margin-right: 1em;"
+                    class="fa fa-exclamation-circle float-end"
+                    tooltipPosition="right"
+                    [pTooltip]="tooltipPromptContent" >
+                  </i>
+                  <ng-template #tooltipPromptContent>
+                    <div class="flex align-items-center">
+                        <span> {{promptTooltip}} </span>
+                    </div>
+                  </ng-template>
+
+                  <textarea id="promt" class="form-control" formControlName="prompt" [rows]="10"></textarea>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 1em">
+                <p-panel>
+
+                  <ng-template pTemplate="header">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="font-bolder" style="font-weight: bold;">
+                          Modelos
+                        </span>
+                      </div>
+
+                      <!-- TOOLTIP -->
+                      <i class="fa fa-exclamation-circle"
+                        style="color: #6d86ab; font-size: 1.4rem; "
+                        tooltipPosition="right"
+                        [pTooltip]="tooltipModel">
+                      </i>
+                      <ng-template #tooltipModel>
+                        <div class="flex align-items-center">
+                          <span> {{modelTooltip}} </span>
+                        </div>
+                      </ng-template>
+
+                    </div>
+                  </ng-template>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label fw-bold">Modelo Jugador 1</label>
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                          <p-dropdown
+                            formControlName="model1"
+                            [(ngModel)]="model1"
+                            [options]="modelsList"
+                            [filter]="true"
+                            filterBy="name"
+                            [showClear]="true"
+                            optionLabel="name"
+                            name="Modelo jugador 1"
+                            placeholder="Seleccione"
+                            emptyMessage="No existen modelos."
+                            appendTo="body" size="large"
+                            (onChange)="verifyModelChange()">
+                          </p-dropdown>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-6" *ngIf="isTwoGamers">
+                      <div class="form-group">
+                        <label class="form-label fw-bold">Modelo Jugador 2</label>
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                          <p-dropdown
+                            formControlName="model2"
+                            [options]="modelsList"
+                            [(ngModel)]="model2"
+                            [filter]="true"
+                            filterBy="name"
+                            [showClear]="true"
+                            optionLabel="name"
+                            name="Modelo jugador 2"
+                            placeholder="Seleccione"
+                            emptyMessage="No existen modelos."
+                            appendTo="body" size="large"
+                            (onChange)="verifyModelChange()">
+                          </p-dropdown>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                </p-panel>
+              </div>
+
+              <!-- APIKEY OPENROUTER -->
+              <div class="row" style="margin-bottom: 1em" *ngIf="needOpenRouterApiKey">
+                <div class="col-sm-12">
+                  <label for="apiKey" class="form-label fw-bold">API key OpenRouter</label>
+                  <a href="https://openrouter.ai/" target="_blank" data-bs-toggle="tooltip" style="text-decoration: none; font-size: 18px;" title="Crear API Key OpenRouter">
+                    🔑
+                  </a>
+
+                  <!-- TOOLTIP -->
+                  <i style="
+                    color: #6d86ab;
+                    font-size: 1.4rem;
+                    margin-right: 1em;"
+                    class="fa fa-exclamation-circle float-end"
+                    tooltipPosition="right"
+                    [pTooltip]="tooltipOpenRouterApiContent" >
+                  </i>
+                  <ng-template #tooltipOpenRouterApiContent>
+                    <div class="flex align-items-center">
+                        <span> {{openRouterApiTooltip}} </span>
+                    </div>
+                  </ng-template>
+
+                  <div class="input-group">
+                      <input
+                          type="text" class="form-control" id="apiKey"
+                          formControlName="apiKey"
+                          placeholder="Ingresa tu API key de OpenRouter">
+                      <button *ngIf="!validApiKey"
+                          class="btn btn-outline-secondary"
+                          type="button"
+                          (click)="validateApiKey()">Validar</button>
+                        <button *ngIf="validApiKey"
+                          class="btn btn-primary"
+                          type="button"
+                          (click)="editApiKey()">Editar</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- APIKEY OPENAI -->
+              <div class="row" style="margin-bottom: 1em" *ngIf="needOpenAiApiKey">
+                <div class="col-sm-12">
+                  <label for="apiKey" class="form-label fw-bold">API key OpenAI</label>
+                  <a href="https://platform.openai.com/docs/overview" target="_blank" data-bs-toggle="tooltip" style="text-decoration: none; font-size: 18px;" title="Crear API Key OpenAI">
+                    🔑
+                  </a>
+                  <!-- TOOLTIP -->
+                  <i style="
+                    color: #6d86ab;
+                    font-size: 1.4rem;
+                    margin-right: 1em;"
+                    class="fa fa-exclamation-circle float-end"
+                    tooltipPosition="right"
+                    [pTooltip]="tooltipOpenAiApiContent" >
+                  </i>
+                  <ng-template #tooltipOpenAiApiContent>
+                    <div class="flex align-items-center">
+                        <span> {{openAiApiTooltip}} </span>
+                    </div>
+                  </ng-template>
+
+                  <div class="input-group">
+                      <input
+                          type="text" class="form-control" id="apiKeyOpenAi"
+                          formControlName="apiKeyOpenAi"
+                          placeholder="Ingresa tu API key de OpenAI">
+                  </div>
+                </div>
+              </div>
+
+
+            <div class="row" style="margin-top: 1em;">
+              <div class="col-md-12">
+                <label for="idModel" class="form-label fw-bold">Tipo de juego:</label>
+
+                <!-- TOOLTIP -->
+                <i style="
+                  color: #6d86ab;
+                  font-size: 1.4rem;
+                  margin-right: 1em;"
+                  class="fa fa-exclamation-circle float-end"
+                  tooltipPosition="right"
+                  [pTooltip]="tooltipGameTypeContent" >
+                </i>
+                <ng-template #tooltipGameTypeContent>
+                  <div class="flex align-items-center">
+                      <span> {{gameTypeTooltip}} </span>
+                  </div>
+                </ng-template>
+
+                <div class="flex items-center gap-4">
+                      <p-radioButton
+                          name="gameType"
+                          value="single"
+                          [(ngModel)]="gameType"
+                          formControlName="gameType"
+                          inputId="type1" />&nbsp;
+                      <label for="type1" class="ml-2">
+                          Simple
+                      </label>
+
+                      &nbsp;&nbsp;&nbsp;
+                      <p-radioButton
+                          name="gameType"
+                          value="double"
+                          [(ngModel)]="gameType"
+                          formControlName="gameType"
+                          inputId="type2"/>&nbsp;
+                      <label for="type2" class="ml-2">
+                          Doble
+                      </label>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 1em;">
+              <div class="col-md-12">
+                <label for="idModel" class="form-label fw-bold">Número de partidas:</label>
+
+                <!-- TOOLTIP -->
+                <i style="
+                  color: #6d86ab;
+                  font-size: 1.4rem;
+                  margin-right: 1em;"
+                  class="fa fa-exclamation-circle float-end"
+                  tooltipPosition="right"
+                  [pTooltip]="tooltipNumberGamesContent" >
+                </i>
+                <ng-template #tooltipNumberGamesContent>
+                  <div class="flex align-items-center">
+                      <span> {{numberGamesTooltip}} </span>
+                  </div>
+                </ng-template>
+
+                <div class="input-group">
+                  <input style="max-width: 80px;"
+                      type="number"
+                      id="numberGames"
+                      class="form-control"
+                      formControlName="numberGames">
+                </div>
+
+              </div>
+            </div>
+
+
+            <br>
+
+            <div class="d-grid gap-2 d-md-flex ">
+              <button class="btn btn-primary justify-content-md-start" type="submit" [disabled]="!juegoForm.valid">
+                <i class="fas fa-play me-2"></i>Iniciar Juego
+              </button>
+              <!-- <button class="btn btn-outline-danger justify-content-md-start" type="button" >Cancelar</button> -->
+              <button class="btn btn-outline-danger justify-content-md-start" type="button" (click)="limpiarPantalla()">Limpiar Pantalla</button>
+
+              <button *ngIf="showDownloadButton"
+                  class="btn btn-success ms-auto" type="button" (click)="DowloadReport()">
+                   <i class="fas fa-download me-2"></i>Descargar resultados
+              </button>
+            </div>
+
+          </form>
+
+          <div class="mt-4">
+            <label class="form-label fw-bold">Consola de Juego</label>
+            <div class="terminal bg-dark text-light p-3 rounded"
+              style="min-height: 200px; font-family: 'Consolas', monospace;">
+              <pre class="m-0" style="white-space: pre-wrap;">
+                > Esperando inicio del juego...
+                <div *ngFor="let log of logs">
+                  {{ log }}
+                </div>
+              </pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pymongo[srv]>=4.0
+motor>=3.1.1
+aiokafka
+langchain-openai
+langchain
+kafka-python==2.0.4
+websockets
+openpyxl

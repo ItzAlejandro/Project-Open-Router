@@ -1,0 +1,25 @@
+label {
+  font-weight: bolder;
+}
+
+::ng-deep p-fileupload .p-button {
+    padding: 5px 8px !important; /* Reduce el tamaño de los botones */
+    font-size: 12px !important;
+  }
+  
+  ::ng-deep p-fileupload .p-fileupload-content {
+    padding: 1px !important; /* Reduce el espacio interno */
+  }
+  
+  ::ng-deep p-fileupload .p-fileupload-choose {
+    height: 30px !important; /* Reduce la altura del botón "Añadir" */
+  }
+  
+  ::ng-deep p-fileupload .p-fileupload-cancel {
+    height: 30px !important; /* Reduce la altura del botón "Cancelar" */
+  }
+  
+  ::ng-deep p-fileupload .p-fileupload-cancel {
+    height: 30px !important; /* Reduce la altura del botón "Cancelar" */
+  }
+  

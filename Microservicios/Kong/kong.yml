@@ -1,0 +1,81 @@
+_format_version: "2.1"
+services:
+  - name: games-service
+    url: http://games:4000
+    routes:
+      - name: games-route
+        paths:
+          - /game
+          - /act
+        strip_path: false
+        plugins:
+          - name: cors
+            config:
+              origins:
+                - "*"
+              methods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+              headers:
+                - Authorization
+                - Content-Type
+              exposed_headers:
+                - X-Custom-Header
+              credentials: true
+              max_age: 3600
+  - name: plays-service
+    url: http://plays:8000
+    routes:
+      - name: plays-route
+        paths:
+          - /ws/partidas
+          - /partidas
+          - /reporte
+        strip_path: false
+        plugins:
+          - name: cors
+            config:
+              origins:
+                - "*"
+              methods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+              headers:
+                - Authorization
+                - Content-Type
+                - Upgrade
+                - Connection
+              exposed_headers:
+                - X-Custom-Header
+              credentials: true
+              max_age: 3600
+  - name: models-service
+    url: http://models:5000
+    routes:
+      - name: models-route
+        paths:
+          - /model
+          - /apiKey
+          - /url
+        strip_path: false
+        plugins:
+          - name: cors
+            config:
+              origins:
+                - "*"
+              methods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+              headers:
+                - Authorization
+                - Content-Type
+              exposed_headers:
+                - X-Custom-Header
+              credentials: true
+              max_age: 3600

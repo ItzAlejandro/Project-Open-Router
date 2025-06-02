@@ -1,0 +1,251 @@
+<div class="container mt-4 d-flex justify-content-center">
+  <div class="card shadow-lg" style="width: 80%;">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">{{encabezado}} modelo</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="form" (ngSubmit)="createEditModel()">
+        
+        <div class="row"  style="margin-bottom: 0.5em">
+          <div class="col-sm-12">
+            <label for="name" class="form-label">Nombre:</label>
+            <!-- TOOLTIP -->
+            <i style="margin-left: 1em; 
+              color: #6d86ab; 
+              font-size: 1.4rem; 
+              margin-right: 2em;" 
+              class="fa fa-exclamation-circle float-end"
+              tooltipPosition="right"
+              [pTooltip]="tooltipModelName" >
+            </i>
+            <ng-template #tooltipModelName>
+              <div class="flex align-items-center">
+                <span> {{nameTooltip}} </span>
+              </div>
+            </ng-template>
+
+            <!-- </div>
+          <div class="col-sm-12"> -->
+
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+            />
+            <div class="text-danger" 
+              *ngIf="(form.get('name')?.invalid && form.get('name')?.touched) || form.get('name')?.invalid && showErrorLabels">
+              El campo 'Nombre', es requerido.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 0.5em">
+          <p-panel>
+            <ng-template pTemplate="header">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="font-bolder" style="font-weight: bold;">
+                    OpenRouter
+                  </span>
+                  &nbsp;&nbsp;&nbsp;
+                  <p-radioButton
+                    name="idModelType" 
+                    [value]="this.openRouterIdentificator" 
+                    [(ngModel)]="idModelType"
+                    formControlName="idModelType"
+                    inputId="type1" 
+                    (click)="onSelectModelOriginType()"/>
+                </div>
+          
+                <!-- TOOLTIP -->
+                <i class="fa fa-exclamation-circle"
+                  style="color: #6d86ab; font-size: 1.4rem; margin-right: 1em;"
+                  tooltipPosition="right"
+                  [pTooltip]="tooltipOpenRouterOption">
+                </i>
+                <ng-template #tooltipOpenRouterOption>
+                  <div class="flex align-items-center">
+                    <span> {{openRouterTooltip}} </span>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-template>
+          
+  
+            <div class="row" >
+              <div class="col-sm-12">
+    
+                <label for="idModel" class="form-label">Id modelo OpenRouter:</label>
+                
+                <div class="flex items-center gap-4" style="margin-bottom: 0.5em">
+                      <p-radioButton
+                          name="payMode" 
+                          value="free" 
+                          [(ngModel)]="payMode"
+                          formControlName="payMode"
+                          inputId="mode1" 
+                          (click)="onPayModeChange()"/>
+                      <span for="mode1" class="ml-2">
+                          Gratis
+                      </span>
+                  
+                      &nbsp;&nbsp;&nbsp;
+                      <p-radioButton 
+                          name="payMode" 
+                          value="pay" 
+                          [(ngModel)]="payMode"
+                          formControlName="payMode"
+                          inputId="mode2"
+                          (click)="onPayModeChange()"/>
+                      <span for="mode2" class="ml-2">
+                          De paga
+                      </span>
+                  
+                      &nbsp;&nbsp;&nbsp;
+                      <p-radioButton 
+                          name="payMode" 
+                          value="all" 
+                          [(ngModel)]="payMode"
+                          formControlName="payMode"
+                          inputId="mode3"
+                          (click)="onPayModeChange()" />
+                      <span for="mode3" class="ml-2">
+                          Todos
+                      </span>
+
+                      <!-- TOOLTIP -->
+                      <!-- <i style=" 
+                        color: #6ba5fd; 
+                        font-size: 1.4rem; 
+                        margin-right: 1em;" 
+                        class="fa fa-exclamation-circle float-end"
+                        tooltipPosition="right"
+                        [pTooltip]="tooltipOpenRouterModel" >
+                      </i>
+                      <ng-template #tooltipOpenRouterModel>
+                        <div class="flex align-items-center">
+                          <span> {{openRouterModelTooltip}} </span>
+                        </div>
+                      </ng-template> -->
+              
+                </div>
+    
+                <!-- class="form-control" -->
+                <p-dropdown 
+                  formControlName="idModelOpenRouter"
+                  [(ngModel)]="idModelOpenRouter"
+                  [options]="openRouterModelFilteredList"
+                  [filter]="true" 
+                  filterBy="id"
+                  [showClear]="true" 
+                  optionLabel="id" 
+                  placeholder="Seleccione" 
+                  emptyMessage="No existen modelos." appendTo="body" size="large"
+                  >
+                </p-dropdown>
+                <div class="text-danger" 
+                  *ngIf="(form.get('idModelOpenRouter')?.invalid && form.get('idModelOpenRouter')?.touched)
+                       || form.get('idModelOpenRouter')?.invalid && this.showErrorLabels">
+                  El Id modelo OpenRouter es requerido.
+                </div>
+    
+              </div>
+    
+            </div>
+          </p-panel>
+        </div>
+
+        <div style="margin-bottom: 0.5em">
+          <p-panel>
+            <ng-template pTemplate="header">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="font-bolder" style="font-weight: bold;">
+                    OpenAI
+                  </span>
+                  &nbsp;&nbsp;&nbsp;
+                  <div class="flex align-items-center gap-2">
+                    <p-radioButton
+                      name="idModelType" 
+                      [value]="this.openAiIdentificator" 
+                      [(ngModel)]="idModelType"
+                      formControlName="idModelType"
+                      inputId="type2" 
+                      (click)="onSelectModelOriginType()"/>
+                  </div>
+                </div>
+
+                <!-- TOOLTIP -->
+                <i class="fa fa-exclamation-circle"
+                  style="color: #6d86ab; font-size: 1.4rem; margin-right: 1em;"
+                  tooltipPosition="right"
+                  [pTooltip]="tooltipOpenAiOption">
+                </i>
+                <ng-template #tooltipOpenAiOption>
+                  <div class="flex align-items-center">
+                    <span> {{openAiTooltip}} </span>
+                  </div>
+                </ng-template>
+
+              </div>
+            </ng-template>
+  
+            <div class="row"  >
+              <div class="col-sm-6">
+                <label for="idModelOpeanAI" class="form-label">Id modelo OpenAI:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="idModelOpenAi"
+                  formControlName="idModelOpenAi"
+                />
+                <div class="text-danger" 
+                  *ngIf="(form.get('idModelOpenAi')?.invalid && form.get('idModelOpenAi')?.touched) 
+                      || (form.get('idModelOpenAi')?.invalid && this.showErrorLabels)">
+                  El Id modelo OpenAI es requerido.
+                </div>
+              </div>
+            </div>
+          </p-panel>
+        </div>
+
+        <div class="row"  style="margin-bottom: 0.5em">
+          <div class="col-sm-12">
+            <label for="description" class="form-label">Descripción:</label>
+
+            <!-- TOOLTIP -->
+            <i style=" 
+              color: #6d86ab; 
+              font-size: 1.4rem; 
+              margin-right: 2em;" 
+              class="fa fa-exclamation-circle float-end"
+              tooltipPosition="right"
+              [pTooltip]="tooltipDescription" >
+            </i>
+            <ng-template #tooltipDescription>
+              <div class="flex align-items-center">
+                <span> {{descriptionTooltip}} </span>
+              </div>
+            </ng-template>
+
+            <textarea
+              class="form-control"
+              id="description"
+              formControlName="description"
+              rows="3"
+            ></textarea>
+            <div class="text-danger" *ngIf="(form.get('description')?.invalid && form.get('description')?.touched) || form.get('description')?.invalid && showErrorLabels">
+              El campo 'Descripción', es requerido. (Mínimo 10 caracteres)
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" routerLink="/modelsList">Cancelar</button>
+          <button type="submit" class="btn btn-success" >Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
